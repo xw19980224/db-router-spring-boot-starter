@@ -2,10 +2,10 @@ package cn.bughome.middleware.db.router.dynamic;
 
 import cn.bughome.middleware.db.router.DBContextHolder;
 import cn.bughome.middleware.db.router.annotation.DBRouterStrategy;
-import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import org.apache.ibatis.executor.statement.StatementHandler;
 import org.apache.ibatis.mapping.BoundSql;
 import org.apache.ibatis.mapping.MappedStatement;
+import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.plugin.Intercepts;
 import org.apache.ibatis.plugin.Invocation;
 import org.apache.ibatis.plugin.Signature;
@@ -23,7 +23,7 @@ import java.util.regex.Pattern;
  * Created by MaxWell on 2025/1/6 15:01
  */
 @Intercepts({@Signature(type = StatementHandler.class, method = "prepare", args = {Connection.class, Integer.class})})
-public class DynamicMyBatisPlusPlugin extends MybatisPlusInterceptor {
+public class DynamicMyBatisPlusPlugin implements Interceptor {
     private final Pattern pattern = Pattern.compile("(from|into|update)[\\s]{1,}(\\w{1,})", Pattern.CASE_INSENSITIVE);
 
     @Override
