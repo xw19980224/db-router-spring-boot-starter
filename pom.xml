@@ -10,7 +10,7 @@
     </parent>
     <groupId>io.github.xw19980224</groupId>
     <artifactId>db-router-spring-boot-starter</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.2-SNAPSHOT</version>
     <name>db-router-spring-boot-starter</name>
     <description>数据库路由组件</description>
     <url/>
