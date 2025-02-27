@@ -13,18 +13,27 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>db-router-spring-boot-starter</name>
     <description>数据库路由组件</description>
-    <url/>
+    
+    <url>git@github.com:xw19980224/db-router-spring-boot-starter.git</url>
     <licenses>
-        <license/>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
     </licenses>
     <developers>
-        <developer/>
+        <developer>
+            <name>maxwell</name>
+            <email>1035071992@qq.com</email>
+            <url>https://github.com/xw19980224</url>
+            <timezone>+8</timezone>
+        </developer>
     </developers>
     <scm>
-        <connection/>
-        <developerConnection/>
-        <tag/>
-        <url/>
+        <tag>master</tag>
+        <url>https://github.com/xw19980224/db-router-spring-boot-starter.git</url>
+        <connection>https://github.com/xw19980224/db-router-spring-boot-starter.git</connection>
+        <developerConnection>scm:git:git@github.com:xw19980224/db-router-spring-boot-starter.git</developerConnection>
     </scm>
     <properties>
         <java.version>17</java.version>
@@ -83,15 +92,55 @@
     </dependencies>
 
     <build>
+        <!--发布代码Jar插件 -->
+        <finalName>db-router-spring-boot-starter</finalName>
         <plugins>
             <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <version>2.7</version>
+            </plugin>
+            <!--发布源码插件 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>2.2.1</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.12.4</version>
                 <configuration>
-                    <skip>true</skip>
+                    <skipTests>true</skipTests>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>8</source>
+                    <target>8</target>
                 </configuration>
             </plugin>
         </plugins>
     </build>
 
+    <distributionManagement>
+        <snapshotRepository>
+            <id>oss</id>
+            <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>oss</id>
+            <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+    </distributionManagement>
 </project>
