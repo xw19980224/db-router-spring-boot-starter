@@ -27,7 +27,7 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
- * @description: 数据源自动配置类
+ *  数据源自动配置类
  * Created by MaxWell on 2025/1/6 14:39
  */
 @Configuration

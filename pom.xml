@@ -10,34 +10,43 @@
     </parent>
     <groupId>io.github.xw19980224</groupId>
     <artifactId>db-router-spring-boot-starter</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1</version>
     <name>db-router-spring-boot-starter</name>
     <description>数据库路由组件</description>
+    <url>https://github.com/xw19980224/db-router-spring-boot-starter</url>
     
-    <url>git@github.com:xw19980224/db-router-spring-boot-starter.git</url>
+    <packaging>jar</packaging>
+
     <licenses>
         <license>
-            <name>The Apache Software License, Version 2.0</name>
-            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <name>MIT License</name>
+            <url>https://opensource.org/licenses/MIT</url>
+            <comments>The project itself is licensed under MIT License.</comments>
         </license>
     </licenses>
-    <developers>
-        <developer>
-            <name>maxwell</name>
-            <email>1035071992@qq.com</email>
-            <url>https://github.com/xw19980224</url>
-            <timezone>+8</timezone>
-        </developer>
-    </developers>
     <scm>
-        <tag>master</tag>
         <url>https://github.com/xw19980224/db-router-spring-boot-starter.git</url>
         <connection>https://github.com/xw19980224/db-router-spring-boot-starter.git</connection>
         <developerConnection>scm:git:git@github.com:xw19980224/db-router-spring-boot-starter.git</developerConnection>
     </scm>
+    <developers>
+        <developer>
+            <name>maxwell</name>
+            <email>1035071992@qq.com</email>
+            <roles>
+                <role>Developer</role>
+            </roles>
+            <timezone>+8</timezone>
+        </developer>
+    </developers>
+    
     <properties>
         <java.version>17</java.version>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+    
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -91,40 +100,36 @@
         </dependency>
     </dependencies>
 
-    <distributionManagement>
-
-        <snapshotRepository>
-            <id>central</id>
-            <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
-        </snapshotRepository>
-        <repository>
-            <id>central</id>
-            <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-        </repository>
-
-    </distributionManagement>
-
     <build>
         <finalName>db-router-spring-boot-starter</finalName>
-        <!--指定filtering=true.maven的占位符解析表达式就可以用于它里面的文件-->
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
-                <includes>
-                    <include>**/*</include>
-                </includes>
                 <filtering>true</filtering>
+                <includes>
+                    <include>**/**</include>
+                </includes>
             </resource>
         </resources>
+        <testResources>
+            <testResource>
+                <directory>src/test/resources</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>**/**</include>
+                </includes>
+            </testResource>
+        </testResources>
         <plugins>
-            <!-- 编译插件，设置源码以及编译的jdk版本 -->
+            <!-- 编译插件适配 Java 17 -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.11.0</version>
                 <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
+                    <release>17</release>
                     <encoding>UTF-8</encoding>
+                    <parameters>true</parameters>
                 </configuration>
             </plugin>
             <plugin>
@@ -143,13 +148,13 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>2.9.1</version>
+                <version>3.6.0</version>
                 <configuration>
-                    <aggregate>true</aggregate>
+                    <source>17</source>
                     <charset>UTF-8</charset>
                     <encoding>UTF-8</encoding>
                     <docencoding>UTF-8</docencoding>
-                    <additionalparam>-Xdoclint:none</additionalparam>
+                    <doclint>none</doclint>
                 </configuration>
                 <executions>
                     <execution>
@@ -174,8 +179,6 @@
                     </execution>
                 </executions>
             </plugin>
-
-            <!--maven插件-->
             <plugin>
                 <groupId>org.sonatype.central</groupId>
                 <artifactId>central-publishing-maven-plugin</artifactId>
@@ -188,16 +191,17 @@
             </plugin>
         </plugins>
     </build>
+
     <profiles>
         <profile>
             <id>release</id>
             <build>
                 <plugins>
-                    <!-- Source -->
+                    <!-- 发布时使用的增强配置 -->
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-source-plugin</artifactId>
-                        <version>2.2.1</version>
+                        <version>3.2.1</version>
                         <executions>
                             <execution>
                                 <phase>package</phase>
@@ -207,19 +211,18 @@
                             </execution>
                         </executions>
                     </plugin>
-                    <!-- Javadoc -->
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-javadoc-plugin</artifactId>
-                        <version>2.9.1</version>
+                        <version>3.6.0</version>
                         <configuration>
+                            <source>17</source>
                             <show>private</show>
                             <nohelp>true</nohelp>
                             <charset>UTF-8</charset>
                             <encoding>UTF-8</encoding>
                             <docencoding>UTF-8</docencoding>
-                            <additionalparam>-Xdoclint:none</additionalparam>
-                            <!-- TODO 临时解决不规范的javadoc生成报错,后面要规范化后把这行去掉 -->
+                            <doclint>none</doclint>
                         </configuration>
                         <executions>
                             <execution>
@@ -230,11 +233,10 @@
                             </execution>
                         </executions>
                     </plugin>
-                    <!-- GPG -->
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-gpg-plugin</artifactId>
-                        <version>1.6</version>
+                        <version>3.1.0</version>
                         <executions>
                             <execution>
                                 <phase>verify</phase>
@@ -244,24 +246,21 @@
                             </execution>
                         </executions>
                     </plugin>
-                    <!--Compiler -->
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-compiler-plugin</artifactId>
-                        <version>3.0</version>
+                        <version>3.11.0</version>
                         <configuration>
-                            <source>1.8</source>
-                            <target>1.8</target>
+                            <release>17</release>
                             <fork>true</fork>
                             <verbose>true</verbose>
                             <encoding>UTF-8</encoding>
                         </configuration>
                     </plugin>
-                    <!--Release -->
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-release-plugin</artifactId>
-                        <version>2.5.1</version>
+                        <version>3.1.0</version>
                     </plugin>
                 </plugins>
             </build>
